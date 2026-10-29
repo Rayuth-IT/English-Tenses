@@ -6,5 +6,6 @@
     color: var(--color-slate-800);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Times New Roman', Times, serif;
   }
 }

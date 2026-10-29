@@ -184,32 +184,62 @@ export default function TenseDetail({ tense }) {
         </div>
       )}
 
-      {/* Conjunction Sections Breakdown */}
+      {/* Detailed Topic / Sections Breakdown */}
       {tense.sections && (
         <div className="space-y-4">
           <h4 className="text-md font-bold text-slate-800">
-            📚 Conjunction Categories Breakdown (ប្រភេទនៃឈ្នាប់ទាំង ៤)
+            📚 Detailed Topic Breakdown (ការបកស្រាយលម្អិតតាមផ្នែក)
           </h4>
           <div className="space-y-4">
             {tense.sections.map((sec, secIdx) => (
               <div key={secIdx} className="bg-slate-50 rounded-xl border border-slate-200 p-5 space-y-3">
                 <div className="border-b border-slate-200 pb-2">
                   <h5 className="font-bold text-indigo-900 text-sm">{sec.title}</h5>
-                  <p className="text-xs font-mono text-slate-600">{sec.subtitle}</p>
+                  {sec.subtitle && <p className="text-xs font-mono text-slate-600">{sec.subtitle}</p>}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {sec.items.map((it, itIdx) => (
-                    <div key={itIdx} className="bg-white p-3 rounded-lg border border-slate-200 text-xs space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-indigo-700">{it.keyword}</span>
+                    <div key={itIdx} className="bg-white p-3.5 rounded-lg border border-slate-200 text-xs space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-bold text-indigo-700 text-sm">{it.keyword}</span>
                         {it.note && (
                           <span className="text-[11px] text-emerald-700 font-khmer bg-emerald-50 px-2 py-0.5 rounded">
                             {it.note}
                           </span>
                         )}
                       </div>
-                      <p className="text-slate-700">{it.usage}</p>
+
+                      {it.definition && (
+                        <p className="text-slate-600 leading-relaxed">{it.definition}</p>
+                      )}
+
+                      {it.usage && (
+                        <div className="p-2 bg-slate-50 rounded border border-slate-200 font-mono text-[11px] text-slate-800">
+                          {it.usage}
+                        </div>
+                      )}
+
+                      {it.examples && it.examples.length > 0 && (
+                        <div className="space-y-1.5 pt-1 border-t border-slate-100">
+                          <span className="font-semibold text-slate-700 text-[11px] block">Examples:</span>
+                          {it.examples.map((ex, exIdx) => (
+                            <div key={exIdx} className="flex items-start justify-between gap-2 bg-indigo-50/40 p-2 rounded">
+                              <div className="space-y-0.5 flex-1">
+                                <p className="font-medium text-slate-800">{ex.en}</p>
+                                <p className="text-[11px] text-slate-600 font-khmer">{ex.km}</p>
+                              </div>
+                              <button
+                                onClick={() => speak(ex.en)}
+                                className="text-slate-400 hover:text-indigo-600 text-xs p-1 cursor-pointer shrink-0"
+                                title="Listen"
+                              >
+                                🔊
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -230,6 +260,41 @@ export default function TenseDetail({ tense }) {
         </div>
       )}
 
+      {/* Optional: Sample Paragraph Architecture Breakdown */}
+      {tense.sampleParagraphBreakdown && (
+        <div className="p-5 bg-indigo-50/40 rounded-xl border border-indigo-100 space-y-4">
+          <div className="flex items-center justify-between border-b border-indigo-100 pb-2">
+            <h4 className="font-bold text-indigo-950 text-sm">
+              🏗️ Paragraph Architecture Breakdown (រចនាសម្ព័ន្ធវិភាគកថាខណ្ឌ)
+            </h4>
+            <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded font-medium">
+              Sample Model
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
+              <span className="font-bold text-indigo-700 uppercase block">1. Topic Sentence (ល្បះប្រធាន)</span>
+              <p className="text-slate-800">{tense.sampleParagraphBreakdown.topicSentence}</p>
+            </div>
+
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
+              <span className="font-bold text-slate-700 uppercase block">2. Supporting Sentences (ល្បះទ្រទ្រង់)</span>
+              <ul className="list-disc list-inside space-y-1 text-slate-800">
+                {tense.sampleParagraphBreakdown.supportingSentences.map((s, idx) => (
+                  <li key={idx}>{s}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
+              <span className="font-bold text-emerald-700 uppercase block">3. Concluding Sentence (ល្បះសន្និដ្ឋាន)</span>
+              <p className="text-slate-800">{tense.sampleParagraphBreakdown.concludingSentence}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Optional: Sample Essay Architecture Breakdown */}
       {tense.sampleEssayBreakdown && (
         <div className="p-5 bg-indigo-50/40 rounded-xl border border-indigo-100 space-y-4">
@@ -246,32 +311,46 @@ export default function TenseDetail({ tense }) {
             {/* Introduction */}
             <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-2 text-xs">
               <span className="font-bold text-indigo-700 uppercase block">1. Introduction (អារម្ភកថា)</span>
-              <p><strong className="text-slate-800">Hook:</strong> {tense.sampleEssayBreakdown.introduction.hook}</p>
-              <p><strong className="text-slate-800">Background:</strong> {tense.sampleEssayBreakdown.introduction.background}</p>
-              <div className="p-2 bg-amber-50 rounded border border-amber-200 text-amber-900 font-medium">
-                <strong>Thesis Statement:</strong> {tense.sampleEssayBreakdown.introduction.thesis}
-              </div>
+              {tense.sampleEssayBreakdown.introduction?.hook && (
+                <p><strong className="text-slate-800">Hook:</strong> {tense.sampleEssayBreakdown.introduction.hook}</p>
+              )}
+              {tense.sampleEssayBreakdown.introduction?.background && (
+                <p><strong className="text-slate-800">Background:</strong> {tense.sampleEssayBreakdown.introduction.background}</p>
+              )}
+              {tense.sampleEssayBreakdown.introduction?.thesis && (
+                <div className="p-2 bg-amber-50 rounded border border-amber-200 text-amber-900 font-medium">
+                  <strong>Thesis Statement:</strong> {tense.sampleEssayBreakdown.introduction.thesis}
+                </div>
+              )}
             </div>
 
             {/* Body Paragraphs */}
-            <div className="space-y-2">
-              <span className="font-bold text-xs text-slate-700 uppercase block">2. Body Paragraphs (តួសេចក្តី)</span>
-              {tense.sampleEssayBreakdown.bodyParagraphs.map((body, bIdx) => (
-                <div key={bIdx} className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
-                  <p className="font-bold text-indigo-800">Body Paragraph {bIdx + 1}:</p>
-                  <p><strong className="text-slate-800">Topic Sentence:</strong> {body.topic}</p>
-                  <p><strong className="text-slate-800">Evidence:</strong> {body.evidence}</p>
-                  <p><strong className="text-slate-800">Explanation:</strong> {body.explanation}</p>
-                </div>
-              ))}
-            </div>
+            {tense.sampleEssayBreakdown.bodyParagraphs && (
+              <div className="space-y-2">
+                <span className="font-bold text-xs text-slate-700 uppercase block">2. Body Paragraphs (តួសេចក្តី)</span>
+                {tense.sampleEssayBreakdown.bodyParagraphs.map((body, bIdx) => (
+                  <div key={bIdx} className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
+                    <p className="font-bold text-indigo-800">Body Paragraph {bIdx + 1}:</p>
+                    {body.topic && <p><strong className="text-slate-800">Topic Sentence:</strong> {body.topic}</p>}
+                    {body.evidence && <p><strong className="text-slate-800">Evidence:</strong> {body.evidence}</p>}
+                    {body.explanation && <p><strong className="text-slate-800">Explanation:</strong> {body.explanation}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Conclusion */}
-            <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
-              <span className="font-bold text-emerald-700 uppercase block">3. Conclusion (និគមនកថា)</span>
-              <p><strong className="text-slate-800">Restated Thesis:</strong> {tense.sampleEssayBreakdown.conclusion.restatedThesis}</p>
-              <p><strong className="text-slate-800">Final Thought:</strong> {tense.sampleEssayBreakdown.conclusion.finalThought}</p>
-            </div>
+            {tense.sampleEssayBreakdown.conclusion && (
+              <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 text-xs">
+                <span className="font-bold text-emerald-700 uppercase block">3. Conclusion (និគមនកថា)</span>
+                {tense.sampleEssayBreakdown.conclusion.restatedThesis && (
+                  <p><strong className="text-slate-800">Restated Thesis:</strong> {tense.sampleEssayBreakdown.conclusion.restatedThesis}</p>
+                )}
+                {tense.sampleEssayBreakdown.conclusion.finalThought && (
+                  <p><strong className="text-slate-800">Final Thought:</strong> {tense.sampleEssayBreakdown.conclusion.finalThought}</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
