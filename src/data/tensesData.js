@@ -460,7 +460,7 @@ export const TENSES_DATA = [
   {
     id: "conjunctions",
     category: "Grammar Essentials (មូលដ្ឋានគ្រឹះវ៉ាកយសព្ទ)",
-    title: "1. Conjunctions (ឈ្នាប់ 4 ប្រភេទ)",
+    title: "1. Conjunctions (ឈ្នាប់​ 4 ប្រភេទ)",
     khmerTitle: "ការប្រើប្រាស់ Conjunctions ទាំង ៤ ប្រភេទ",
     tag: "Grammar",
     formula: "Coordination | Conjunctive Adverbs | Subordinating | Correlative",
@@ -602,7 +602,7 @@ export const TENSES_DATA = [
     title: "7. Direct and Reported Speech",
     khmerTitle: "ការនិយាយផ្ទាល់ និងការរាយការណ៍ (Reported Speech)",
     tag: "Grammar",
-    formula: "Subject + said (that) + Backshifted Tense",
+    formula: "Subject + said/told (that) + Backshifted Tense",
     usageEn: "Reported speech conveys what someone else stated using backshifted tense rules.",
     usageKm: "ការរាយការណ៍សម្តីអ្នកដទៃ ដោយប្តូរកាលថយក្រោយមួយកម្រិត (Backshift Tense)។",
     structures: { affirmative: "Direct to Indirect backshifting" },
