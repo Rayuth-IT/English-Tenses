@@ -1,101 +1,63 @@
-import React from 'react';
+// LessonDetail.jsx
+// Tailwind-based lesson detail view — replaces the old Bootstrap version.
 
-const LessonDetail = ({ lesson }) => {
+export default function LessonDetail({ lesson }) {
   if (!lesson) {
     return (
-      <div className="container py-5 text-center text-muted">
-        <h4>សូមជ្រើសរើសមេរៀនណាមួយពីបញ្ជីខាងឆ្វេង ដើម្បីចាប់ផ្តើមសិក្សា</h4>
+      <div className="flex flex-col items-center justify-center py-20 text-slate-400">
+        <span className="text-5xl mb-4">📖</span>
+        <p className="font-khmer text-sm">
+          សូមជ្រើសរើសមេរៀនណាមួយពីបញ្ជីខាងឆ្វេង ដើម្បីចាប់ផ្តើមសិក្សា
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="container py-4 px-3 px-md-5" style={{ maxWidth: '900px' }}>
-      
-      {/* 🏷️ Header Section with Badge & Titles */}
-      <div className="mb-4 pb-3 border-bottom border-2 border-primary">
-        <span className="badge bg-primary fs-6 px-3 py-2 mb-2 shadow-sm">
-          {lesson.tag || "Grammar Module"}
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6 flex-1 max-w-3xl">
+
+      {/* Header */}
+      <div className="border-b border-slate-100 pb-4">
+        <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold uppercase tracking-wide mb-2">
+          {lesson.tag || 'Grammar Module'}
         </span>
-        <h1 className="fw-bold text-dark display-6 mb-1">{lesson.title}</h1>
-        <h4 className="text-secondary fw-normal">{lesson.khmerTitle}</h4>
+        <h1 className="text-2xl font-black text-slate-800">{lesson.title}</h1>
+        <h3 className="text-lg font-bold text-indigo-600 font-khmer">{lesson.khmerTitle}</h3>
       </div>
 
-      {/* 💡 Usage & Explanation Box */}
-      <div className="card shadow-sm border-0 mb-4 bg-light rounded-4">
-        <div className="card-body p-4">
-          <h5 className="text-primary fw-bold mb-3">📖 គោលបំណង និងការប្រើប្រាស់ (Usage)</h5>
-          <p className="lead fs-6 text-dark mb-2">{lesson.usageEn}</p>
-          <p className="text-muted fs-6 mb-0">{lesson.usageKm}</p>
-        </div>
-      </div>
-
-      {/* ⚡ Formula & Structure Box (Highlighted Important Words) */}
+      {/* Formula */}
       {lesson.formula && (
-        <div className="card border-start border-4 border-success shadow-sm mb-4 rounded-3 bg-white">
-          <div className="card-body p-3">
-            <span className="text-uppercase text-success fw-bold fs-7 d-block mb-1">
-              ⚙️ សន្និដ្ឋានទម្រង់វ៉ាកយសព្ទ (Formula Structure)
-            </span>
-            <code className="fs-5 text-dark fw-bold bg-light px-3 py-2 rounded d-block">
-              {lesson.formula}
-            </code>
-          </div>
+        <div className="bg-slate-900 text-amber-300 p-4 rounded-xl">
+          <span className="text-xs uppercase text-slate-400 block font-semibold mb-1">
+            ⚙️ Formula / Structure (រូបមន្ត)
+          </span>
+          <code className="text-lg font-mono font-bold">{lesson.formula}</code>
         </div>
       )}
 
-      {/* 📊 Adverbs of Frequency Chart (If Available) */}
-      {lesson.frequencyChart && (
-        <div className="card shadow-sm my-4 border-0 rounded-4 overflow-hidden">
-          <div className="card-header bg-dark text-white fw-bold py-3">
-            📊 តារាងកម្រិតញឹកញាប់ (Adverbs of Frequency Chart)
-          </div>
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col" style={{ width: '15%' }}>Frequency</th>
-                  <th scope="col" style={{ width: '30%' }}>Adverb</th>
-                  <th scope="col">Example Sentence</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lesson.frequencyChart.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <span className={`badge ${
-                        item.percentage === '100%' ? 'bg-success' :
-                        item.percentage === '0%' ? 'bg-danger' : 'bg-info text-dark'
-                      } fs-6 px-2 py-1`}>
-                        {item.percentage}
-                      </span>
-                    </td>
-                    <td className="fw-bold text-primary text-decoration-underline">{item.adverb}</td>
-                    <td>
-                      <div className="fw-medium text-dark">{item.example}</div>
-                      <small className="text-muted">{item.km}</small>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      {/* Usage */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+          <h4 className="font-bold text-blue-900 text-sm mb-1">🇬🇧 English Explanation</h4>
+          <p className="text-slate-700 text-sm leading-relaxed">{lesson.usageEn}</p>
         </div>
-      )}
+        <div className="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+          <h4 className="font-bold text-emerald-900 text-sm mb-1 font-khmer">🇰🇭 ពន្យល់ជាភាសាខ្មែរ</h4>
+          <p className="text-slate-700 text-sm leading-relaxed font-khmer">{lesson.usageKm}</p>
+        </div>
+      </div>
 
-      {/* 📝 Detailed Use Cases (At least 3-4 usages if available) */}
+      {/* Use Cases */}
       {lesson.useCases && lesson.useCases.length > 0 && (
-        <div className="mb-4">
-          <h4 className="fw-bold text-dark mb-3">📌 ការប្រើប្រាស់លម្អិត (Detailed Use Cases)</h4>
-          <div className="row g-3">
+        <div>
+          <h4 className="text-sm font-bold text-slate-800 mb-3">📌 Detailed Use Cases (ការប្រើប្រាស់លម្អិត)</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {lesson.useCases.map((uc, idx) => (
-              <div className="col-md-6" key={idx}>
-                <div className="card h-100  shadow-sm p-3 bg-white rounded-3 border-top border-3 border-info">
-                  <h6 className="fw-bold text-primary">{uc.title}</h6>
-                  <p className="text-muted small mb-2">{uc.desc}</p>
-                  <div className="bg-light p-2 rounded text-dark small fst-italic">
-                    "{uc.example}"
-                  </div>
+              <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-200 border-t-4 border-t-sky-400">
+                <h6 className="font-bold text-indigo-700 text-xs mb-1">{uc.title}</h6>
+                <p className="text-slate-500 text-xs mb-2">{uc.desc}</p>
+                <div className="bg-indigo-50 p-2 rounded text-xs text-slate-800 italic">
+                  &ldquo;{uc.example}&rdquo;
                 </div>
               </div>
             ))}
@@ -103,27 +65,20 @@ const LessonDetail = ({ lesson }) => {
         </div>
       )}
 
-      {/* ✨ Examples Section with Underlined Keywords */}
+      {/* Examples */}
       {lesson.examples && lesson.examples.length > 0 && (
-        <div className="card border-0 shadow-sm rounded-4 mb-4 bg-white">
-          <div className="card-body p-4">
-            <h4 className="fw-bold text-dark mb-3">💬 ឧទាហរណ៍ជាក់ស្តែង (Examples)</h4>
-            <ul className="list-group list-group-flush">
-              {lesson.examples.map((ex, idx) => (
-                <li key={idx} className="list-group-item py-3 border-light">
-                  <div className="fw-bold text-dark fs-6">
-                    • <span className="text-decoration-underline text-primary">{ex.en}</span>
-                  </div>
-                  <div className="text-secondary ps-3 mt-1">{ex.km}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div>
+          <h4 className="text-sm font-bold text-slate-800 mb-3">💬 Examples (ឧទាហរណ៍)</h4>
+          <ul className="space-y-3">
+            {lesson.examples.map((ex, idx) => (
+              <li key={idx} className="p-3 bg-indigo-50/30 rounded-lg border border-indigo-100">
+                <p className="font-semibold text-slate-800 text-sm">• {ex.en}</p>
+                <p className="text-xs text-slate-600 font-khmer mt-1 pl-3">{ex.km}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-
     </div>
   );
-};
-
-export default LessonDetail;
+}

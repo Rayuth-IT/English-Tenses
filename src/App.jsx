@@ -4,8 +4,17 @@ import Sidebar from './components/Sidebar';
 import TenseDetail from './components/TenseDetail';
 import PracticeQuiz from './components/PracticeQuiz';
 import ResourcesView from './components/ResourceView';
-import { TENSES_DATA, getQuizByLessonId } from './data/tensesData';
-import LessonDetail from './components/LessonDetail';
+import { TENSES_DATA } from './data/tensesData';
+
+// Build a flat list of all quiz questions from every lesson, tagged with lesson info
+const QUIZ_QUESTIONS = TENSES_DATA.flatMap((lesson) =>
+  (lesson.quiz || []).map((q, i) => ({
+    ...q,
+    id: `${lesson.id}-q${i}`,
+    lessonTitle: lesson.title,
+    lessonTag: lesson.tag,
+  }))
+);
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('learn');
@@ -37,8 +46,6 @@ export default function App() {
       <footer className="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 font-khmer">
         © 2026 English Tenses Educational Platform — បង្កើតឡើងសម្រាប់សម្រួលដល់ការសិក្សារបស់សិស្ស
       </footer>
-
-      <LessonDetail/>
     </div>
   );
 }

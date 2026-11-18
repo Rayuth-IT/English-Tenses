@@ -2,10 +2,14 @@
 
 @layer base {
   body {
-    background-color: var(--color-slate-100);
-    color: var(--color-slate-800);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'Times New Roman', Times, serif;
+  }
+}
+
+@layer utilities {
+  .font-khmer {
+    font-family: 'Khmer OS Battambang', 'Khmer OS', sans-serif;
+    line-height: 1.6;
   }
 }
